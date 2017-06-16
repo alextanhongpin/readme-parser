@@ -1,0 +1,10 @@
+{
+  "name": "readme-parser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alextanhongpin/readme-parser.git",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
+}
