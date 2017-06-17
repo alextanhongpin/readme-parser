@@ -1,20 +1,4 @@
-// const request = require('request')
-
-// request('https://raw.githubusercontent.com/engineersmy/events/master/README.md', (error, response, body) => {
-//   if (!error && response.statusCode === 200) {
-//     console.log(body)
-
-//     // const headings = /(?:##)\s(.+)(?:\r?\n?)*(?:\r?\n?)*/gmi.exec(body)
-//     // console.log(headings)
-
-//     const headings1 = body.match(/^(?!##)\s(.+)/gmi)/// (?:##)\s(.+)(?:\r?\n?)*(?:\r?\n?)*/gmi)
-//     console.log(headings1)
-
-//     // const titles = /^(?:##)\s(.+)(?:\r?\n?)((+.\r?\n?))/gmi.exec(body)
-//     // const events = body.match(/^(?:##)\s(.+)(?:\r?\n?)((+.\r?\n?))/gmi)
-//     // console.log(events)
-//   }
-// })
+const parser = require('./parser.v2.js')
 
 const input = `# Events
 
@@ -75,46 +59,8 @@ const input = `# Events
 * [Eventbrite](https://www.eventbrite.com/)
 * [MaGIC](https://www.mymagic.my/)
 `
-// Remove title
-const withoutTitle = input.replace(/#{1,1}(.+)/, '')
-const events = withoutTitle.split(/#{2,2}(.+)/).map((a) => a.trim()).filter(a => a)
+const output = parser(input)
+console.log(JSON.stringify(output, null, 2))
 
-const output = events.reduce((model, event, index) => {
-  if ((index + 1) % 2 === 0) return model
-  model[event] = events[index + 1]
-  return model
-}, {})
-
-// Output is an object dictionary that contains the date of the current events
-// console.log(output)
-
-const datesWithEvents = Object.keys(output).reduce((obj, date) => {
-  const events = output[date].split('+').filter(x => x.trim())
-  const eventsWithDates = events.map((event) => {
-    console.log('do something', event.split(/\b((\d.+\-))/img))
-    const [ date, url ] = event.split(' - ')
-    const hasData = /\[(.+?\r?\n?)\]\((.+?\r?\n?)\)$/img.exec(url)
-
-    if (!hasData) {
-    //   / console.log('no data =>', hasData, url, event)
-      return {}
-    }
-    const [ _, title, link ] = hasData
-    return {
-      date,
-      title,
-      link
-    }
-  })
-  obj[date] = eventsWithDates
-  return obj
-}, {})
-
-const eventsByMonths = Object.keys(datesWithEvents).map((key) => {
-  return {
-    date: key,
-    events: datesWithEvents[key]
-  }
-})
-
-console.log(eventsByMonths)
+console.log(output.titles[0])
+console.log(output.sections[0])
