@@ -2,6 +2,9 @@
   "name": "readme-parser",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "repository": "https://github.com/alextanhongpin/readme-parser.git",
   "license": "MIT",
   "dependencies": {

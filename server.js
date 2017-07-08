@@ -1,5 +1,5 @@
 const fs = require('fs')
-const parser = require('./parser.v3.js')
+const parser = require('./parser.v5.js')
 
 const input = `# Events
 
@@ -132,6 +132,7 @@ const input = `# Events
 * [MaGIC](https://www.mymagic.my/)
 `
 const output = parser(input)
+console.log('PRINTING RESULT\n\n\n\n\n')
 console.log(JSON.stringify(output, null, 2))
 
 fs.writeFile('ouput.json', JSON.stringify(output), 'utf-8', (error, ok) => {
